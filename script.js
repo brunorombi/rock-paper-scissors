@@ -7,7 +7,17 @@ function getComputerChoice() {
     } else {
         choice = 'scissors';
     }
+
     return choice;
 }
 
-console.log(getComputerChoice());
+function getHumanChoice() {
+    let choice = prompt(`Choose your move (Rock, Paper, Scissors)`).toLowerCase();
+
+    if (choice === 'rock' || choice === 'paper' || choice === 'scissors') {
+        return choice;
+    } 
+    return getHumanChoice();
+}
+
+console.log(getHumanChoice());
