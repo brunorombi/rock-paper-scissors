@@ -48,20 +48,21 @@ function playRound(humanChoice, computerChoice) {
     }
 }
 
-function playGame() {
-    for (let i = 0; i < 5; i++) {
-        let humanSelection = getHumanChoice();
-        let computerSelection = getComputerChoice();
-        playRound(humanSelection, computerSelection);
-    }
+const rock = document.querySelector("#rock");
+rock.addEventListener('click', () => {
+    let computerChoice = getComputerChoice();
+    playRound('rock', computerChoice);
+});
 
-    if (humanScore > computerScore) {
-        console.log('congratulation, you win!');
-    } else if (humanScore < computerScore) {
-        console.log('Unfortunately you lost :(');
-    } else {
-        console.log('Tie:/');
-    }
-}
 
-playGame();
+const paper = document.querySelector("#paper");
+paper.addEventListener('click', () => {
+    let computerChoice = getComputerChoice();
+    playRound('paper', computerChoice);
+});
+
+const scissors = document.querySelector("#scissors");
+scissors.addEventListener('click', () => {
+    let computerChoice = getComputerChoice();
+    playRound('scissors', computerChoice);
+});
