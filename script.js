@@ -11,13 +11,13 @@ function getComputerChoice() {
     } else {
         choice = 'scissors';
     }
-
+    
     return choice;
 }
 
 function getHumanChoice() {
     let choice = prompt(`Choose your move (Rock, Paper, Scissors)`).toLowerCase();
-
+    
     if (choice === 'rock' || choice === 'paper' || choice === 'scissors') {
         return choice;
     } 
@@ -26,24 +26,24 @@ function getHumanChoice() {
 
 function playRound(humanChoice, computerChoice) {
     if (humanChoice === computerChoice) {
-        console.log(`Tie, both choose ${humanChoice}`);
+        result.textContent = `Tie, both choose ${humanChoice}`;
     } else if (humanChoice === 'paper' && computerChoice === 'scissors') {
-        console.log(`You lose! Scissors beats Paper`);
+        result.textContent = `You lose! Scissors beats Paper`;
         computerScore++;
     } else if (humanChoice === 'scissors' &&  computerChoice === 'paper') {
-        console.log(`You win! Scissors beats paper`);
+        result.textContent = `You win! Scissors beats paper`;
         humanScore++; 
     } else if (humanChoice === 'rock' && computerChoice === 'paper') {
-        console.log(`You lose, Paper beats Rock`);
+        result.textContent = `You lose, Paper beats Rock`;
         computerScore++;   
     } else if (computerChoice === 'rock' && humanChoice === 'paper') { 
-        console.log(`You win, Paper beats Rock`);
+        result.textContent = `You win, Paper beats Rock`;
         humanScore++;      
     } else if (humanChoice === 'rock' && computerChoice === 'scissors') {
-        console.log(`You win! Rock beats Scissors`)
+        result.textContent = `You win! Rock beats Scissors`
         humanScore++;       
     } else {
-        console.log(`You lose, Rock beats Scissors`);
+        result.textContent = `You lose, Rock beats Scissors`;
         computerScore++;     
     }
 }
@@ -53,7 +53,6 @@ rock.addEventListener('click', () => {
     let computerChoice = getComputerChoice();
     playRound('rock', computerChoice);
 });
-
 
 const paper = document.querySelector("#paper");
 paper.addEventListener('click', () => {
@@ -66,3 +65,5 @@ scissors.addEventListener('click', () => {
     let computerChoice = getComputerChoice();
     playRound('scissors', computerChoice);
 });
+
+const result = document.querySelector("#result");
