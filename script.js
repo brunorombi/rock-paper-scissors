@@ -1,6 +1,12 @@
 let humanScore = 0;
 let computerScore = 0;
+let rounds = 5;
 
+const rock = document.querySelector("#rock");
+const paper = document.querySelector("#paper");
+const scissors = document.querySelector("#scissors");
+const result = document.querySelector("#result");
+const winner = document.querySelector("#winner");
 
 function getComputerChoice() {
     let choice = Math.random();
@@ -15,55 +21,77 @@ function getComputerChoice() {
     return choice;
 }
 
-function getHumanChoice() {
-    let choice = prompt(`Choose your move (Rock, Paper, Scissors)`).toLowerCase();
-    
-    if (choice === 'rock' || choice === 'paper' || choice === 'scissors') {
-        return choice;
-    } 
-    return getHumanChoice();
-}
-
 function playRound(humanChoice, computerChoice) {
     if (humanChoice === computerChoice) {
-        result.textContent = `Tie, both choose ${humanChoice}`;
+        result.textContent = `Tie, both choose ${humanChoice} Rounds left: ${rounds}`;
     } else if (humanChoice === 'paper' && computerChoice === 'scissors') {
-        result.textContent = `You lose! Scissors beats Paper`;
+        result.textContent = `You lose! Scissors beats Paper Rounds left: ${rounds}`;
         computerScore++;
     } else if (humanChoice === 'scissors' &&  computerChoice === 'paper') {
-        result.textContent = `You win! Scissors beats paper`;
+        result.textContent = `You win! Scissors beats paper Rounds left: ${rounds}`;
         humanScore++; 
     } else if (humanChoice === 'rock' && computerChoice === 'paper') {
-        result.textContent = `You lose, Paper beats Rock`;
+        result.textContent = `You lose, Paper beats Rock Rounds left: ${rounds}`;
         computerScore++;   
     } else if (computerChoice === 'rock' && humanChoice === 'paper') { 
-        result.textContent = `You win, Paper beats Rock`;
+        result.textContent = `You win, Paper beats Rock Rounds left: ${rounds}`;
         humanScore++;      
     } else if (humanChoice === 'rock' && computerChoice === 'scissors') {
-        result.textContent = `You win! Rock beats Scissors`
+        result.textContent = `You win! Rock beats Scissors Rounds left: ${rounds}`
         humanScore++;       
     } else {
-        result.textContent = `You lose, Rock beats Scissors`;
+        result.textContent = `You lose, Rock beats Scissors Rounds left: ${rounds}`;
         computerScore++;     
     }
 }
 
-const rock = document.querySelector("#rock");
+
 rock.addEventListener('click', () => {
-    let computerChoice = getComputerChoice();
-    playRound('rock', computerChoice);
+    humanChoice = "rock";
+    const computerChoice = getComputerChoice();
+    rounds--;
+    playRound(humanChoice, computerChoice);
+    if (rounds === 0) {
+        updateWinner(humanScore, computerScore);
+        endGame();
+    }
 });
 
-const paper = document.querySelector("#paper");
 paper.addEventListener('click', () => {
-    let computerChoice = getComputerChoice();
-    playRound('paper', computerChoice);
+    humanChoice = "paper";
+    const computerChoice = getComputerChoice();
+    rounds--;
+    playRound(humanChoice, computerChoice);
+    if (rounds === 0) {
+        updateWinner(humanScore, computerScore);
+        endGame();
+    }   
+
 });
 
-const scissors = document.querySelector("#scissors");
 scissors.addEventListener('click', () => {
-    let computerChoice = getComputerChoice();
-    playRound('scissors', computerChoice);
+    humanChoice = "scissors";
+    const computerChoice = getComputerChoice();
+    rounds--;
+    playRound(humanChoice, computerChoice);
+    if (rounds === 0) {
+        updateWinner(humanScore, computerScore);
+        endGame();
+    }
 });
 
-const result = document.querySelector("#result");
+function updateWinner(humanScore, computerScore) {
+    if (humanScore > computerScore) {
+        winner.textContent = "You win!";
+    } else if (computerScore > humanScore) {
+        winner.textContent = "You lose :(";
+    } else {
+        winner.textContent = "Tie!";
+    }
+}
+
+function endGame() {
+    humanScore = 0;
+    computerScore = 0;
+    rounds = 5;
+}
