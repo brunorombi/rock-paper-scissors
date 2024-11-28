@@ -18,6 +18,8 @@ function getComputerChoice() {
 }
 
 function playRound(humanChoice, computerChoice) {
+    resetWinner();
+    
     if (humanChoice === computerChoice) {
         result.textContent = `Tie, both choose ${humanChoice}. Rounds left: ${rounds}`;
     } else if (
@@ -25,11 +27,11 @@ function playRound(humanChoice, computerChoice) {
         (humanChoice === "paper" && computerChoice === "rock") ||
         (humanChoice === "scissors" && computerChoice === "paper")
     ) {
-        humanScore++;
         result.textContent = `You win! ${humanChoice} beats ${computerChoice}. Rounds left: ${rounds}`;
+        humanScore++;
     } else {
-        computerScore++;
         result.textContent = `You lose! ${computerChoice} beats ${humanChoice}. Rounds left: ${rounds}`;
+        computerScore++;
     }
 }
 
@@ -43,12 +45,16 @@ function updateWinner(humanScore, computerScore) {
     }
 }
 
+function resetWinner() {
+    winner.textContent = "";
+}
+
 function endGame() {
-    updateWinner();
+    updateWinner(humanScore, computerScore);
     humanScore = 0;
     computerScore = 0;
     rounds = 5;
-    result.textContent = "Click to start the game. Rounds left: 5"
+    result.textContent = "Click to start the game. Rounds left: 5";
 }
 
 function handleChoice(humanChoice) {
@@ -56,7 +62,7 @@ function handleChoice(humanChoice) {
     rounds--;
     playRound(humanChoice, computerChoice);
 
-    if (rounds === 0) {
+    if (!rounds) {
         endGame();
     }
 }
