@@ -11,39 +11,25 @@ const winner = document.querySelector("#winner");
 result.textContent = "Click to start the game. Rounds left: 5"
 
 function getComputerChoice() {
-    let choice = Math.random();
-    if (choice >= 0 && choice <= 0.33) {
-        choice = 'rock';
-    } else if (choice > 0.33 && choice <= 0.66) {
-        choice = 'paper';
-    } else {
-        choice = 'scissors';
-    }
-    return choice;
+    const choice = Math.random();
+    if (choice <= 0.33) return "rock";
+    if (choice <= 0.66) return "paper";
+    return "scissors";
 }
 
 function playRound(humanChoice, computerChoice) {
-    winner.textContent = "";
     if (humanChoice === computerChoice) {
-        result.textContent = `Tie, both choose ${humanChoice} Rounds left: ${rounds}`;
-    } else if (humanChoice === 'paper' && computerChoice === 'scissors') {
-        result.textContent = `You lose! Scissors beats Paper Rounds left: ${rounds}`;
-        computerScore++;
-    } else if (humanChoice === 'scissors' &&  computerChoice === 'paper') {
-        result.textContent = `You win! Scissors beats paper Rounds left: ${rounds}`;
-        humanScore++; 
-    } else if (humanChoice === 'rock' && computerChoice === 'paper') {
-        result.textContent = `You lose, Paper beats Rock Rounds left: ${rounds}`;
-        computerScore++;   
-    } else if (computerChoice === 'rock' && humanChoice === 'paper') { 
-        result.textContent = `You win, Paper beats Rock Rounds left: ${rounds}`;
-        humanScore++;      
-    } else if (humanChoice === 'rock' && computerChoice === 'scissors') {
-        result.textContent = `You win! Rock beats Scissors Rounds left: ${rounds}`
-        humanScore++;       
+        result.textContent = `Tie, both choose ${humanChoice}. Rounds left: ${rounds}`;
+    } else if (
+        (humanChoice === "rock" && computerChoice === "scissors") ||
+        (humanChoice === "paper" && computerChoice === "rock") ||
+        (humanChoice === "scissors" && computerChoice === "paper")
+    ) {
+        humanScore++;
+        result.textContent = `You win! ${humanChoice} beats ${computerChoice}. Rounds left: ${rounds}`;
     } else {
-        result.textContent = `You lose, Rock beats Scissors Rounds left: ${rounds}`;
-        computerScore++;     
+        computerScore++;
+        result.textContent = `You lose! ${computerChoice} beats ${humanChoice}. Rounds left: ${rounds}`;
     }
 }
 
@@ -58,38 +44,25 @@ function updateWinner(humanScore, computerScore) {
 }
 
 function endGame() {
+    updateWinner();
     humanScore = 0;
     computerScore = 0;
     rounds = 5;
     result.textContent = "Click to start the game. Rounds left: 5"
 }
 
-rock.addEventListener('click', () => {
+function handleChoice(humanChoice) {
     const computerChoice = getComputerChoice();
     rounds--;
-    playRound("rock", computerChoice);
+    playRound(humanChoice, computerChoice);
+
     if (rounds === 0) {
-        updateWinner(humanScore, computerScore);
         endGame();
     }
-});
+}
 
-paper.addEventListener('click', () => {
-    const computerChoice = getComputerChoice();
-    rounds--;
-    playRound("paper", computerChoice);
-    if (rounds === 0) {
-        updateWinner(humanScore, computerScore);
-        endGame();
-    }   
-});
+rock.addEventListener('click', () => handleChoice("rock"));
+paper.addEventListener('click', () => handleChoice("paper"));
+scissors.addEventListener('click', () => handleChoice("scissors"));   
 
-scissors.addEventListener('click', () => {
-    const computerChoice = getComputerChoice();
-    rounds--;
-    playRound("scissors", computerChoice);
-    if (rounds === 0) {
-        updateWinner(humanScore, computerScore);
-        endGame();
-    }
-});
+
