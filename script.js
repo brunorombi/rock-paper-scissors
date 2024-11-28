@@ -8,6 +8,8 @@ const scissors = document.querySelector("#scissors");
 const result = document.querySelector("#result");
 const winner = document.querySelector("#winner");
 
+result.textContent = "Click to start the game. Rounds left: 5"
+
 function getComputerChoice() {
     let choice = Math.random();
     if (choice >= 0 && choice <= 0.33) {
@@ -17,11 +19,11 @@ function getComputerChoice() {
     } else {
         choice = 'scissors';
     }
-    
     return choice;
 }
 
 function playRound(humanChoice, computerChoice) {
+    winner.textContent = "";
     if (humanChoice === computerChoice) {
         result.textContent = `Tie, both choose ${humanChoice} Rounds left: ${rounds}`;
     } else if (humanChoice === 'paper' && computerChoice === 'scissors') {
@@ -45,41 +47,6 @@ function playRound(humanChoice, computerChoice) {
     }
 }
 
-
-rock.addEventListener('click', () => {
-    humanChoice = "rock";
-    const computerChoice = getComputerChoice();
-    rounds--;
-    playRound(humanChoice, computerChoice);
-    if (rounds === 0) {
-        updateWinner(humanScore, computerScore);
-        endGame();
-    }
-});
-
-paper.addEventListener('click', () => {
-    humanChoice = "paper";
-    const computerChoice = getComputerChoice();
-    rounds--;
-    playRound(humanChoice, computerChoice);
-    if (rounds === 0) {
-        updateWinner(humanScore, computerScore);
-        endGame();
-    }   
-
-});
-
-scissors.addEventListener('click', () => {
-    humanChoice = "scissors";
-    const computerChoice = getComputerChoice();
-    rounds--;
-    playRound(humanChoice, computerChoice);
-    if (rounds === 0) {
-        updateWinner(humanScore, computerScore);
-        endGame();
-    }
-});
-
 function updateWinner(humanScore, computerScore) {
     if (humanScore > computerScore) {
         winner.textContent = "You win!";
@@ -94,4 +61,35 @@ function endGame() {
     humanScore = 0;
     computerScore = 0;
     rounds = 5;
+    result.textContent = "Click to start the game. Rounds left: 5"
 }
+
+rock.addEventListener('click', () => {
+    const computerChoice = getComputerChoice();
+    rounds--;
+    playRound("rock", computerChoice);
+    if (rounds === 0) {
+        updateWinner(humanScore, computerScore);
+        endGame();
+    }
+});
+
+paper.addEventListener('click', () => {
+    const computerChoice = getComputerChoice();
+    rounds--;
+    playRound("paper", computerChoice);
+    if (rounds === 0) {
+        updateWinner(humanScore, computerScore);
+        endGame();
+    }   
+});
+
+scissors.addEventListener('click', () => {
+    const computerChoice = getComputerChoice();
+    rounds--;
+    playRound("scissors", computerChoice);
+    if (rounds === 0) {
+        updateWinner(humanScore, computerScore);
+        endGame();
+    }
+});
